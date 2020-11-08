@@ -195,7 +195,7 @@ GET
 	"data": {
 		"id":"",              //动作id
 		"point":"",           //动作要点
-		"intro": "暂无",       //动作详情
+		"info": "暂无",       //动作详情
 		"logo":""             //动作logo的url
 		"video":""            //动作视频的url
 	}
