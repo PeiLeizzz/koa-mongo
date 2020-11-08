@@ -3,13 +3,10 @@ const app = new Koa()
 const serve = require('koa-static')
 const body = require('koa-body')
 const { connect } = require('./models/connect')
-// const dbClient = require('./models/db.js')
-// app.context.db = dbClient.db('testDB');
 
 const userApi = require('./routes/user')
 const actionApi = require('./routes/action')
 const coursesApi = require('./routes/coursesTable')
-
 
 app.use(body({Multipart: true}))
 app.use(serve('./assets'))
