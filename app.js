@@ -8,7 +8,7 @@ const userApi = require('./routes/user')
 const actionApi = require('./routes/action')
 const coursesApi = require('./routes/coursesTable')
 
-app.use(body({Multipart: true}))
+app.use(body({ Multipart: true }))
 app.use(serve('./assets'))
 app.use(userApi.routes())
 app.use(coursesApi.routes())

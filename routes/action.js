@@ -45,11 +45,11 @@ router.post('/add_action', async (ctx, next) => {
         }
         const newAction = {
             "id": action.actionId,
-            "name": action.name
-            // "point": action.point,
-            // "info": action.info,
-            // "logo": action.logo,
-            // "video": action.video
+            "name": action.name,
+            "point": action.point,
+            "info": action.info,
+            "logo": action.logo,
+            "video": action.video
         }
         res = await actionService.addAction(newAction)
         ctx.body = res
