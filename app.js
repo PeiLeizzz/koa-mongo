@@ -6,16 +6,16 @@ const { connect } = require('./models/connect')
 // const dbClient = require('./models/db.js')
 // app.context.db = dbClient.db('testDB');
 
-//const usersApi = require('./routes/usersTable')
 const userApi = require('./routes/user')
+const actionApi = require('./routes/action')
 const coursesApi = require('./routes/coursesTable')
-const actionsApi = require('./routes/actionsTable')
+
 
 app.use(body({Multipart: true}))
 app.use(serve('./assets'))
 app.use(userApi.routes())
 app.use(coursesApi.routes())
-app.use(actionsApi.routes())
+app.use(actionApi.routes())
 
 let server = app.listen(3000, function() {
     const host = server.address().address;

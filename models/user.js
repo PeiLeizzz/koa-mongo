@@ -6,7 +6,7 @@ const userSchema = new Schema({
     id: { type: String, required: true, unique: true },
     name: { type: String, required: true, default: 'ZZKF' + Date.now() },
     date: { type: String, required: true, default: new Date().toLocaleDateString() },
-    days: [
+    planTable: [
         [
             {
                 id: { type: String, required: true },

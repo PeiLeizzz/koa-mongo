@@ -22,7 +22,7 @@ router.get('/get_user_plan/:userId', async (ctx) => {
                 },
                 data: {
                     "name": res.name,
-                    "days": res.days
+                    "planTable": res.planTable
                 }
             }
         }
@@ -41,9 +41,9 @@ router.post('/add_user', async (ctx, next) => {
             return
         }
         const newUser = {
-            'id': user.id,
-            'name': '' || user.name,
-            'days': [
+            'id': user.userId,
+            'name': user.name,
+            'planTables': [
                 [
                     {
                         'id': user.courseId,
