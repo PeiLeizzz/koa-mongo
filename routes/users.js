@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const userService = require('../service/user')
+const userService = require('../service/users')
 
 router.get('/get_user_plan/:userId', async (ctx) => {
     try {

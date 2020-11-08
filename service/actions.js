@@ -1,9 +1,10 @@
-const actionModel = require('../models/action')
+const actionModel = require('../models/actions')
 
 class ActionService {
     async getAction(actionId) {
         try {
             let action = await actionModel.findOne({'id': actionId})
+            console.log(action)
             return action
         }
         catch (e) {

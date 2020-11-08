@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const actionService = require('../service/action')
+const actionService = require('../service/actions')
 
 router.get('/get_action/:actionId', async (ctx) => {
     try {

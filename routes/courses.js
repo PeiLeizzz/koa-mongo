@@ -1,10 +1,11 @@
 const router = require('koa-router')()
+const courseService = require('../service/courses')
 
-router.get('/get_course_plan/:courseId', async (ctx, next) => {
-    try {
-        let table = ctx.db.collection('courses')
+router.get('/get_course_plan/:courseId', async (ctx, next) =>{
+    try{
         let id = ctx.params.courseId
-        let res = await table.findOne({'courseId': id})
+        let res = await courseService.getAction(id)
+        console.log(res)
         if (res === null) {
             return {
                 status: {
@@ -21,20 +22,14 @@ router.get('/get_course_plan/:courseId', async (ctx, next) => {
                     "msg": "ok"
                 },
                 data: {
-                    "courseName": res.courseName,
-                    "plan": res.plan
+                    "name": res.name,
+                    "actions": res.actions
                 }
             }
         }
     }
     catch (e) {
         console.log(e)
-        return {
-            status: {
-                "code": 500,
-                "msg": "error"
-            }
-        }
     }
 })
 
