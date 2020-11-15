@@ -7,9 +7,7 @@ const courseSchema = new Schema({
     length: { type: Number, required: true},
     actions: [
         {
-            id: { type: String, required: true },
-            length: { type: Number, required: true },
-            now: { type: Number, required: true, default: 0 } 
+            id: { type: String, required: true }
         }
         
     ],
