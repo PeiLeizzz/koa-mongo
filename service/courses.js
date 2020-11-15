@@ -1,7 +1,7 @@
 const courseModel = require('../models/courses')
 
 class CourseService{
-    async getAction(courseId) {
+    async getCourse(courseId) {
         try {
             let courseDetail = await courseModel.findOne({'id': courseId})
             console.log(courseDetail)
