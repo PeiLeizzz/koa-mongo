@@ -3,29 +3,27 @@ const courseService = require('../service/courses')
 
 router.get('/get_course_plan/:courseId', async (ctx, next) =>{
     try{
+        let res = {}
         let id = ctx.params.courseId
-        let res = await courseService.getCourse(id)
-        console.log(res)
+        let data = await courseService.getCourse(id)
         if (res === null) {
-            return {
+            res = {
                 status: {
                     "code": 404,
                     "msg": "not found"
                 }
             }
+            ctx.body = res
         }
         else {
-            ctx.body = res
-            return {
+            res = {
                 status: {
                     "code": 200,
                     "msg": "ok"
                 },
-                data: {
-                    "name": res.name,
-                    "actions": res.actions
-                }
+                data: data
             }
+            ctx.body = res
         }
     }
     catch (e) {
@@ -37,19 +35,12 @@ router.get('/get_course_plan/:courseId', async (ctx, next) =>{
 router.post('/add_course', async (ctx, next) => {
     try {
         let course = ctx.request.body
-        let res = await courseService.getCourse(course.courseId)
+        let res = await courseService.getCourse(course.id)
         if (res != null) {
-            ctx.body = "已存在"
             return
         }
-        const newCourse = {
-            "id": course.courseId,
-            "name": course.name,
-            "length": course.length,
-            "actions": course.actions,
-            "logo": course.logo,
-            "info": course.info
-        }
+        res = await courseService.insertCourse(course)
+        ctx.body = res
     }
     catch (e) {
         console.log(e)

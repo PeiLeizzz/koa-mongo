@@ -1,30 +1,45 @@
 const router = require('koa-router')()
 const userService = require('../service/users')
+const courseService = require('../service/courses')
 
 router.get('/get_user_plan/:userId', async (ctx) => {
     try {
+        let res = {}
         let id = ctx.params.userId
-        let res = await userService.getPlan(id)
-        if (res === null) {
-            return {
+        let data = await userService.getPlan(id)
+        if (data === null) {
+            res = {
                 status: {
                     "code": 404,
                     "msg": "not found"
                 }
             }
+            ctx.body = res
         }
         else {
-            ctx.body = res
-            return {
+            for (let i = 0; i < data.planTable.length; i++) {
+                let day = data.planTable[i]
+                for (let j = 0; j < day.length; j++) {
+                    let courseId = day[j].id
+                    let courseRes = await courseService.getCourse(courseId)
+                    if (courseRes != null) {
+                        data.planTable[i][j]._doc.name = courseRes.name
+                        data.planTable[i][j]._doc.logo = courseRes.logo
+                    }
+                    else {
+                        data.planTable[i][j]._doc.name = ""
+                        data.planTable[i][j]._doc.logo = ""
+                    }
+                }
+            }
+            res = {
                 status: {
                     "code": 200,
                     "msg": "ok"
                 },
-                data: {
-                    "name": res.name,
-                    "planTable": res.planTable
-                }
+                data: data
             }
+            ctx.body = res
         }
     }
     catch (e) {
@@ -35,24 +50,11 @@ router.get('/get_user_plan/:userId', async (ctx) => {
 router.post('/add_user', async (ctx, next) => {
     try {
         let user = ctx.request.body
-        let res = await userService.getPlan(user.userId)
+        let res = await userService.getPlan(user.id)
         if (res != null) {
-            ctx.body = '已存在'
             return
         }
-        const newUser = {
-            'id': user.userId,
-            'name': user.name,
-            'planTables': [
-                [
-                    {
-                        'id': user.courseId,
-                        'length': user.length,
-                    }
-                ]
-            ]
-        }
-        res = await userService.insertUser(newUser)
+        res = await userService.insertUser(user)
         ctx.body = res
     }
     catch (e) {

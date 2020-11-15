@@ -4,7 +4,6 @@ class CourseService{
     async getCourse(courseId) {
         try {
             let courseDetail = await courseModel.findOne({'id': courseId})
-            console.log(courseDetail)
             return courseDetail
         }
         catch (e) {

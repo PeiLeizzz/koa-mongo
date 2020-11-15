@@ -4,7 +4,6 @@ class ActionService {
     async getAction(actionId) {
         try {
             let action = await actionModel.findOne({'id': actionId})
-            console.log(action)
             return action
         }
         catch (e) {

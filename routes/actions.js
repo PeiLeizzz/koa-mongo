@@ -3,31 +3,27 @@ const actionService = require('../service/actions')
 
 router.get('/get_action/:actionId', async (ctx) => {
     try {
+        let res = {}
         let id = ctx.params.actionId
-        let res = await actionService.getAction(id)
-        if (res === null) {
-            return {
+        let data = await actionService.getAction(id)
+        if (data === null) {
+            res = {
                 status: {
                     "code": 404,
                     "msg": "not found"
                 }
             }
+            ctx.body = res
         }
         else {
-            ctx.body = res
-            return {
+            res = {
                 status: {
                     "code": 200,
                     "msg": "ok"
                 },
-                data: {
-                    "name": res.name,
-                    "point": res.point,
-                    "info": res.info,
-                    "logo": res.logo,
-                    "video": res.video
-                }
+                data: data
             }
+            ctx.body = res
         }
     }
     catch (e) {
@@ -38,20 +34,11 @@ router.get('/get_action/:actionId', async (ctx) => {
 router.post('/add_action', async (ctx, next) => {
     try {
         let action = ctx.request.body
-        let res = await actionService.getAction(action.actionId)
+        let res = await actionService.getAction(action.id)
         if (res != null) {
-            ctx.body = "已存在"
             return
         }
-        const newAction = {
-            "id": action.actionId,
-            "name": action.name,
-            "point": action.point,
-            "info": action.info,
-            "logo": action.logo,
-            "video": action.video
-        }
-        res = await actionService.addAction(newAction)
+        await actionService.addAction(action)
         ctx.body = res
     }
     catch (e) {
